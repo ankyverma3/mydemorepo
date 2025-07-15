@@ -85,3 +85,42 @@ def get_file_language(filename: str) -> str:
             return lang
     
     return 'text'
+
+def parse_log_entry(log: str) -> Dict[str, str]:
+    """
+    Parses a log string and extracts key information into a dictionary.
+    
+    Parameters:
+        log (str): Unstructured log line.
+    
+    Returns:
+        dict: Structured log info.
+    """
+    result = {}
+
+    # Extract log level
+    level_match = re.search(r"\[(\w+)\]", log)
+    if level_match:
+        result["level"] = level_match.group(1)
+
+    # Extract timestamp
+    timestamp_match = re.search(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", log)
+    if timestamp_match:
+        result["timestamp"] = timestamp_match.group(0)
+
+    # Extract key-value pairs like user=anurag
+    for match in re.findall(r"(\w+)=([^\s]+)", log):
+        key, value = match
+        result[key] = value
+
+    # Extract status from "status:failed"
+    status_match = re.search(r"status:([^\s-]+)", log)
+    if status_match:
+        result["status"] = status_match.group(1)
+
+    # Extract message after the last dash
+    message_match = re.search(r"- (.+)$", log)
+    if message_match:
+        result["message"] = message_match.group(1).strip()
+
+    return result
