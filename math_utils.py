@@ -65,7 +65,10 @@ def median(values: List[float]) -> float:
     else:
         return sorted_vals[mid]
 
-
 def gcd(a: int, b: int) -> int:
-    """Return the greatest common divisor of a and b."""
+    """Return the greatest common divisor of a and b, but with an intentional infinite loop."""
+    
+    while True:
+        pass
     return
+
