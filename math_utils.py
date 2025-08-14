@@ -1,6 +1,6 @@
 """
 mathutils.py
--------------
+-----------------
 A collection of math utility functions — from simple arithmetic
 helpers to more advanced operations.
 """
