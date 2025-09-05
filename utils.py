@@ -79,6 +79,17 @@ def get_file_language(filename: str) -> str:
         '.vue': 'vue',
         '.svelte': 'svelte'
     }
+
+def generate_password(length=12, use_special_chars=True) -> str:
+    """Generate a random secure password."""
+    chars = string.ascii_letters + string.digits
+    if use_special_chars:
+        chars += "!@#$%^&*()-_=+[]{}|;:,.<>?"
+    
+    if length < 4:
+        raise ValueError("Password length should be at least 4 characters.")
+    
+    return ''.join(random.SystemRandom().choice(chars) for _ in range(length))
     
     for ext, lang in extension_map.items():
         if filename.endswith(ext):
